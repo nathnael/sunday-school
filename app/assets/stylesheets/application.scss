@@ -1,0 +1,36 @@
+$fa-font-path: '@fortawesome/fontawesome-free/webfonts';
+@import '@fortawesome/fontawesome-free/scss/fontawesome';
+@import '@fortawesome/fontawesome-free/scss/regular';
+@import '@fortawesome/fontawesome-free/scss/solid';
+@import '@fortawesome/fontawesome-free/scss/brands';
+@import 'bootstrap/scss/bootstrap';
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&lang=en");
+@import "admin-lte/dist/css/adminlte";
+@import "ionicons";
+@import "toastr/toastr";
+@import "Chart.min.css";
+// @import "jquery.dataTables.min.css";
+@import "datatables/dataTables.bootstrap4.css";
+@import "datatables/responsive.bootstrap4.css";
+@import "datatables/buttons.bootstrap4.css";
+@import "jquery.calendars/redmond.calendars.picker";
+@import "icheck-bootstrap.min.css";
+@import "multiple_select.min.css";
+
+
+#container {
+    height: 500px;
+    min-width: 310px;
+    max-width: 600px;
+    margin: 0 auto; 
+}
+.loading {
+    margin-top: 10em;
+    text-align: center;
+    color: gray;
+}
+
+.side-logo {
+    width: 90% !important;
+    margin:5%;
+}

@@ -1,0 +1,26 @@
+<div class="login-form">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-sm-4">
+            <h2 class="heading-secondary ma-bt-lg">Resend confirmation instructions</h2>
+        </div>
+    </div>            
+    <div class="wrapper wrapper-content">
+        <div class="ibox-content">                              
+            <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name),:html=> {method: :post, class:'form form--login'}) do |f| %>
+                <%= render "devise/shared/error_messages", resource: resource %>               
+
+                <div class="form__group">
+                  <%= f.label :email, class: 'form__label' %><br />
+                  <%= f.email_field :email, autofocus: true, class: "form__input", autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
+                </div>
+                <br />
+                <div class="form__group">
+                  <%= f.submit "Resend confirmation instructions", class: "btn btn--green" %>
+                </div>
+                <br />
+            <% end %>
+
+            <%= render "devise/shared/links" %>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,220 @@
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-12">
+        <h1>Manage permission for <em><%= @user.name %></em></h1>
+      </div><!-- /.col -->      
+    </div><!-- /.row -->
+    <div class="row mb-2">
+      <div class="col-sm-10">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/users">User</a></li>
+          <li class="breadcrumb-item active">User Permissions</li>
+        </ol>
+      </div><!-- /.col -->
+      <div class="col-sm-2">
+        <div class="title-action float-sm-right">
+          <%= link_to 'Back', "/users/#{@user.id}",  :class => "btn btn-default"%>
+        </div>
+      </div><!-- /.col -->
+    </div>
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="title-action float-sm-right">
+              <input type="checkbox" id="selectAll" value="selectAll"> Select / Deselect All<br/><br/>
+            </div>           
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <%= form_tag "/users/#{@user.id}/updatePermissions", method: :put do %>
+              <table class="table table-bordered table-striped iraps_datatable">
+                <thead>
+                  <tr>
+                    <th>Activity</th>
+                    <th>Guest</th>
+                    <th>Clerk</th>
+                    <th>Manager</th>
+                    <th>Admin</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @unique_permissions.each do |permission| %>
+                    <tr>
+                      <td><%= permission %></td>
+                      <td>
+                        <% guest_permission = @all_permissions.where(name: permission, user_type: 0).first %>
+                        <%= check_box_tag "permissions[#{guest_permission.id}]", 1 , @user.permissions.include?(guest_permission), class: 'guest_' + permission, permission_name: permission  %>
+                      </td>
+                      <td>
+                        <% clerk_permission = @all_permissions.where(name: permission, user_type: 1).first %>
+                        <%= check_box_tag "permissions[#{clerk_permission.id}]", 1 , @user.permissions.include?(clerk_permission), class: 'clerk_' + permission, permission_name: permission  %>
+                      </td>
+                      <td>
+                        <% manager_permission = @all_permissions.where(name: permission, user_type: 2).first %>
+                        <%= check_box_tag "permissions[#{manager_permission.id}]", 1 , @user.permissions.include?(manager_permission), class: 'manager_' + permission, permission_name: permission  %>
+                      </td>
+                      <td>
+                        <% admin_permission = @all_permissions.where(name: permission, user_type: 3).first %>
+                        <%= check_box_tag "permissions[#{admin_permission.id}]", 1 , @user.permissions.include?(admin_permission), class: 'admin_' + permission, permission_name: permission  %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th>Activity</th>
+                    <th>Guest</th>
+                    <th>Clerk</th>
+                    <th>Manager</th>
+                    <th>Admin</th>
+                  </tr>
+                </tfoot>
+              </table>
+              <div class="actions">
+                <%= submit_tag 'Save Changes', :class => 'btn btn-primary' %>
+              </div>
+            <%end%>
+          </div>
+          <!-- /.card-body -->
+        </div>
+      </div>
+      <!-- /.card -->
+    </div>
+  </div>
+</section>
+<!-- /.content -->
+
+<script>
+//   $(document).ready(function() {
+//     if ( ! $.fn.DataTable.isDataTable( '.iraps_datatable' ) ) {
+//       $('.iraps_datatable').DataTable({
+//         "paging": true,
+//         "lengthChange": true,
+//         "searching": true,
+//         "ordering": true,
+//         "info": true,
+//         "autoWidth": true,
+//         "responsive": true,
+//         "dom": 'lBfrtip',
+//         "buttons": [
+//             'copy', 'csv', 'pdf', 'print'
+//         ]
+//       });
+//     }  
+//   });
+</script>
+
+
+
+
+
+
+
+<script>
+$('#selectAll').click(function() {
+   if (this.checked) {
+       $(':checkbox').each(function() {
+           this.checked = true;                        
+       });
+   } else {
+      $(':checkbox').each(function() {
+           this.checked = false;                        
+       });
+   } 
+});
+
+
+
+$("#tbl").dataTable().fnDestroy();
+var table = $('#tbl').DataTable();
+table.destroy();
+$("form").on('submit', function(e){
+   var $form = $(this);
+   // Iterate over all checkboxes in the table
+   table.$('input[type="checkbox"]').each(function(){
+      // If checkbox doesn't exist in DOM
+      if(!$.contains(document, this)){
+         // If checkbox is checked
+         if(this.checked){
+            // Create a hidden element 
+            $form.append(
+               $('<input>')
+                  .attr('type', 'hidden')
+                  .attr('name', this.name)
+                  .val(this.value)
+            );
+         }
+      } 
+   });          
+});
+
+$(document).ready(function() {
+  $('[class^="guest"]').on('click', function (e) {
+    var permissionName = $(this).attr("permission_name");
+    $(".clerk_" + permissionName).each(function() {
+      this.checked = false;                        
+    });
+    $(".manager_" + permissionName).each(function() {
+      this.checked = false;                        
+    });
+    $(".admin_" + permissionName).each(function() {
+      this.checked = false;                        
+    });
+  });
+  $('[class^="clerk"]').on('click', function (e) {
+    var permissionName = $(this).attr("permission_name");
+    if (this.checked) {      
+      $(".guest_" + permissionName).each(function() {
+        this.checked = true;                        
+      });      
+    }
+    else{
+      $(".manager_" + permissionName).each(function() {
+        this.checked = false;                        
+      });
+      $(".admin_" + permissionName).each(function() {
+        this.checked = false;                        
+      });
+    }
+  });
+  $('[class^="manager"]').on('click', function (e) {
+    var permissionName = $(this).attr("permission_name");
+    if (this.checked) {
+      $(".guest_" + permissionName).each(function() {
+        this.checked = true;                        
+      }); 
+      $(".clerk_" + permissionName).each(function() {
+        this.checked = true;                        
+      });     
+    }
+    else{ 
+      $(".admin_" + permissionName).each(function() {
+        this.checked = false;                        
+      });
+    }
+  });
+  $('[class^="admin"]').on('click', function (e) {
+    var permissionName = $(this).attr("permission_name");
+    if (this.checked) {      
+      $(".guest_" + permissionName).each(function() {
+        this.checked = true;                        
+      }); 
+      $(".clerk_" + permissionName).each(function() {
+        this.checked = true;                        
+      });  
+      $(".manager_" + permissionName).each(function() {
+        this.checked = true;                        
+      });   
+    }
+  });
+});
+</script>

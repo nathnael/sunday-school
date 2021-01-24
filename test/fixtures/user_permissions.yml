@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  permission_id: 1
+  created_by: 1
+  modified_by: 1
+  deleted_at: 2021-01-20 02:44:37
+
+two:
+  user_id: 1
+  permission_id: 1
+  created_by: 1
+  modified_by: 1
+  deleted_at: 2021-01-20 02:44:37

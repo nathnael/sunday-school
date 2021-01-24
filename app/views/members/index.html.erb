@@ -1,0 +1,121 @@
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">Members</h1>
+      </div><!-- /.col -->
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item active">Members</li>
+        </ol>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="title-action float-sm-right">
+              <%= link_to 'New Member', new_member_path, :class => "btn btn-primary"%>
+            </div>           
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table class="table table-bordered table-striped iraps_datatable">
+              <thead>
+                <tr>
+                  <th>Christian name</th>
+                  <th>Name</th>
+                  <th>Gender</th>
+                  <th>Dob</th>                  
+                  <th>Membership date</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @members.each do |member| %>
+                  <tr>
+                    <td>
+                      <%= member.christian_name %>
+                    </td>
+                    <td>
+                      <a href="<%= member_path(member)%>"> 
+                        <%= member.name %>                   
+                      </a>                      
+                    </td>
+                    <td>
+                      <%= member.gender %>
+                    </td>
+                    <td>
+                      <%= member.dob %>
+                    </td>                    
+                    <td>
+                      <%= member.membership_date %>
+                    </td>
+                    <td>
+                      <%= member.status %>
+                    </td>
+                    <td>
+                      <a href="<%= edit_member_path(member)%>" class="btn btn-warning btn-sm">
+                        <i class="fa fa-edit" aria-hidden="true"></i>  
+                        Edit                   
+                      </a>
+                      <%= link_to member, method: :delete, :class => "btn btn-danger btn-sm", :data=> { :confirm => "Are you sure?" }  do %>
+                        <i class="fa fa-archive"></i>   
+                        Delete     
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Christian name</th>
+                  <th>Name</th>
+                  <th>Gender</th>
+                  <th>Dob</th>                  
+                  <th>Membership date</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+      </div>
+      <!-- /.card -->
+    </div>
+  </div>
+</section>
+<!-- /.content -->
+
+<script>
+  $(document).ready(function() {
+    if ( ! $.fn.DataTable.isDataTable( '.iraps_datatable' ) ) {
+      $('.iraps_datatable').DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": true,
+        "responsive": true,
+        "dom": 'lBfrtip',
+        "buttons": [
+            'copy', 'csv', 'pdf', 'print'
+        ]
+      });
+    }
+    
+  });
+</script>
+

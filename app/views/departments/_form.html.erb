@@ -1,0 +1,49 @@
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- left column -->
+      <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="card card-primary">
+          
+          <!-- form start -->
+          <%= form_with(model: department, local: true) do |f| %>
+            <div class="card-body">
+              <% if department.errors.any? %>
+                <div class="panel panel-danger">
+                  <div class="panel-heading">
+                    <%= pluralize(department.errors.count, "error") %> prohibited this department from being saved.
+                  </div>
+
+                  <div class="panel-body">
+                    <ul>
+                      <% department.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                      <% end %>
+                    </ul>
+                  </div>
+                </div>
+              <% end %>
+              <div class="form-group col-3">
+                <%= f.label :name %>
+                <%= f.text_field :name, :class => 'form-control' %>
+              </div>
+
+              <div class="form-group col-3">
+                <%= f.label :description %>
+                <%= f.text_field :description, :class => 'form-control' %>
+              </div>
+            </div>
+            <!-- /.card-body -->
+            
+            <div class="card-footer">
+              <%= f.submit :class => 'btn btn-primary' %>
+            </div>
+          <% end %>
+        </div>
+        <!-- /.card -->
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,80 @@
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- left column -->
+      <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="card card-primary">
+          
+          <!-- form start -->
+          <%= form_with(model: permission, local: true) do |f| %>
+            <div class="card-body">
+              <% if permission.errors.any? %>
+                <div class="panel panel-danger">
+                  <div class="panel-heading">
+                    <%= pluralize(permission.errors.count, "error") %> prohibited this permission from being saved.
+                  </div>
+
+                  <div class="panel-body">
+                    <ul>
+                      <% permission.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                      <% end %>
+                    </ul>
+                  </div>
+                </div>
+              <% end %>
+              <div class="form-group col-3">
+                <%= f.label :name %>
+                <%= f.text_field :name, :class => 'form-control' %>
+              </div>
+
+              <div class="form-group col-12">
+                <div class="form-group col-12">
+                  <%= f.label :user_type %>
+                </div>
+                <div class="d-inline col-3">
+                  <%= f.check_box "roles[guest]" %>
+                  <label for="roles[guest]">
+                    Guest
+                  </label>
+                </div>
+                <div class="d-inline col-3">
+                  <%= f.check_box "roles[clerk]" %>
+                  <label for="roles[clerk]">
+                    Clerk
+                  </label>
+                </div>
+                <div class="d-inline col-3">
+                  <%= f.check_box "roles[manager]" %>
+                  <label for="roles[manager]">
+                    Manager
+                  </label>
+                </div>
+                <div class="d-inline col-3">
+                  <%= f.check_box "roles[admin]" %>
+                  <label for="roles[admin]">
+                    Admin
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group col-3">
+                <%= f.label :description %>
+                <%= f.text_area :description, :class => 'form-control' %>
+              </div>
+
+            <!-- /.card-body -->
+            
+            <div class="card-footer">
+              <%= f.submit :class => 'btn btn-primary' %>
+            </div>
+          <% end %>
+        </div>
+        <!-- /.card -->
+      </div>
+    </div>
+  </div>
+</section>
+

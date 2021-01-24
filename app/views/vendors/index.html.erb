@@ -1,0 +1,110 @@
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">Vendors</h1>
+      </div><!-- /.col -->
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item active">Vendors</li>
+        </ol>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="title-action float-sm-right">
+              <%= link_to 'New Vendor', new_vendor_path, :class => "btn btn-primary"%>
+            </div>           
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table class="table table-bordered table-striped iraps_datatable">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Code</th>
+                  <th>Org unit</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @vendors.each do |vendor| %>
+                  <tr>
+                    <td>
+                      <a href="<%= vendor_path(vendor)%>"> 
+                        <%= vendor.name %>                   
+                      </a>                      
+                    </td>
+                    <td>
+                      <%= vendor.code %>
+                    </td>
+                    <td>
+                      <%= vendor.org_unit %>
+                    </td>
+                    <td>
+                      <%= vendor.status %>
+                    </td>
+                    <td>
+                      <a href="<%= edit_vendor_path(vendor)%>" class="btn btn-warning btn-sm">
+                        <i class="fa fa-edit" aria-hidden="true"></i>  
+                        Edit                   
+                      </a>
+                      <%= link_to vendor, method: :delete, :class => "btn btn-danger btn-sm", :data=> { :confirm => "Are you sure?" }  do %>
+                        <i class="fa fa-archive"></i>   
+                        Delete     
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Name</th>
+                  <th>Code</th>
+                  <th>Org unit</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+      </div>
+      <!-- /.card -->
+    </div>
+  </div>
+</section>
+<!-- /.content -->
+
+<script>
+  $(document).ready(function() {
+    if ( ! $.fn.DataTable.isDataTable( '.iraps_datatable' ) ) {
+      $('.iraps_datatable').DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": true,
+        "responsive": true,
+        "dom": 'lBfrtip',
+        "buttons": [
+            'copy', 'csv', 'pdf', 'print'
+        ]
+      });
+    }
+    
+  });
+</script>

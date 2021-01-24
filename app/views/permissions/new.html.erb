@@ -1,0 +1,26 @@
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-12">
+        <h1 class="m-0 text-dark">Permissions</h1>
+      </div><!-- /.col -->      
+    </div><!-- /.row -->
+    <div class="row mb-2">
+      <div class="col-sm-10">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item active">New Permission</li>
+        </ol>
+      </div><!-- /.col -->
+      <div class="col-sm-2">
+        <div class="title-action float-sm-right">
+          <%= link_to 'Cancel', permissions_path,  :class => "btn btn-default"%>
+        </div>
+      </div><!-- /.col -->
+    </div>
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<%= render 'form', permission: @permission %>

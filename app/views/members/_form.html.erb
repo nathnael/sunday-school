@@ -1,0 +1,268 @@
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- left column -->
+      <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="card card-primary">
+          
+          <!-- form start -->
+          <%= form_with(model: member, local: true) do |f| %>
+            <div class="card-body">
+              <% if member.errors.any? %>
+                <div class="panel panel-danger">
+                  <div class="panel-heading">
+                    <%= pluralize(member.errors.count, "error") %> prohibited this member from being saved.
+                  </div>
+
+                  <div class="panel-body">
+                    <ul>
+                      <% member.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                      <% end %>
+                    </ul>
+                  </div>
+                </div>
+              <% end %>
+
+              <div class="row">
+                <div class="form-group col-4">
+                  <%= f.label :name %>
+                  <%= f.text_field :name, :class => 'form-control' %>
+                </div>  
+                <div class="form-group col-4">
+                  <%= f.label :father_name %>
+                  <%= f.text_field :father_name, :class => 'form-control' %>
+                </div>    
+                <div class="form-group col-4">
+                  <%= f.label :grand_father_name %>
+                  <%= f.text_field :grand_father_name, :class => 'form-control' %>
+                </div>   
+              </div>
+
+              <div class="row">
+                <div class="form-group col-4">
+                  <%= f.label 'Name (am)' %>
+                  <%= f.text_field :name_am, :class => 'form-control amharic_input' %>
+                </div>
+                <div class="form-group col-4">
+                  <%= f.label 'Father Name (am)' %>
+                  <%= f.text_field :father_name_am, :class => 'form-control amharic_input' %>
+                </div>
+                <div class="form-group col-4">
+                  <%= f.label 'Grand Father Name (am)' %>
+                  <%= f.text_field :grand_father_name_am, :class => 'form-control amharic_input' %>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group col-4">
+                  <%= f.label :gender %>
+                  <%= f.text_field :gender, :class => 'form-control' %>
+                </div>
+                <div class="form-group col-4">
+                  <%= f.label :dob %>
+                  <%= f.text_field :dob, :class => 'form-control' %>
+                </div>
+                <div class="form-group col-4">
+                  <%= f.label :educational_level %>
+                  <%= f.text_field :educational_level, :class => 'form-control' %>
+                </div>
+              </div>
+
+              <div class="row">                
+                <div class="form-group col-4">
+                  <%= f.label :work %>
+                  <%= f.text_field :work, :class => 'form-control' %>
+                </div>
+                <div class="form-group col-4">
+                  <%= f.label :christian_name %>
+                  <%= f.text_field :christian_name, :class => 'form-control' %>
+                </div>
+                <div class="form-group col-4">
+                  <%= f.label 'Christian Name (am)' %>
+                  <%= f.text_field :christian_name_am, :class => 'form-control amharic_input' %>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group col-4">
+                  <%= f.label :membership_date %>
+                  <%= f.text_field :membership_date, :class => 'form-control gregorian_datepicker', :required => true %>
+                </div>
+                <div class="form-group col-4">
+                  <label>Departments</label>
+                  <%= select_tag 'member[departments]', options_from_collection_for_select(Department.all, :id, :name, member.departments.pluck(:id)), multiple: true, size: '10%', class: 'form-control multiple_select' %>
+                </div>
+                <div class="form-group col-4">
+                  <%= f.label :talent %>
+                  <%= f.text_area :talent, :class => 'form-control' %>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="form-group col-3">
+                  <%= f.label :home_address %>
+                </div>
+                <div class="ibox float-e-margins">
+                  <div class="ibox-content">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Sub-city</th>
+                          <th>Woreda</th>
+                          <th>House No.</th>
+                          <th>Home Phone</th>
+                          <th>Mobile Phone</th>
+                          <th>Email</th>
+                          <th>Postal Code</th>              
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody id="dispatchItemsTableBody">                      
+                        <tr>
+                          <td>
+                            <input id="sub_city" name="member[home_address[sub_city]]" type="text" class="form-control" />
+                          </td>  
+                          <td>
+                            <input id="woreda" name="member[home_address[woreda]]" type="text" class="form-control" />
+                          </td>  
+                          <td>
+                            <input id="house_no" name="member[home_address[house_no]]" type="text" class="form-control" />
+                          </td>  
+                          <td>
+                            <input id="home_phone" name="member[home_address[home_phone]]" type="text" class="form-control" />
+                          </td>  
+                          <td>
+                            <input id="mobile_phone" name="member[home_address[mobile_phone]]" type="text" class="form-control" />
+                          </td>  
+                          <td>
+                            <input id="email" name="member[home_address[email]]" type="text" class="form-control" />
+                          </td>  
+                          <td>
+                            <input id="postal_code" name="member[home_address[postal_code]]" type="text" class="form-control" />
+                          </td>                    
+                        </tr>
+                      </tbody>                  
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group col-3">
+                  <%= f.label :work_address %>
+                </div>
+                <div class="ibox float-e-margins">
+                  <div class="ibox-content">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Sub-city</th>
+                          <th>Woreda</th>
+                          <th>House No.</th>
+                          <th>Home Phone</th>
+                          <th>Mobile Phone</th>
+                          <th>Email</th>
+                          <th>Postal Code</th>              
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody id="dispatchItemsTableBody">                      
+                        <tr>
+                          <td>
+                            <input id="sub_city" name="member[work_address[sub_city]]" type="text" class="form-control" />
+                          </td>  
+                          <td>
+                            <input id="woreda" name="member[work_address[woreda]]" type="text" class="form-control" />
+                          </td>  
+                          <td>
+                            <input id="house_no" name="member[work_address[house_no]]" type="text" class="form-control" />
+                          </td>  
+                          <td>
+                            <input id="home_phone" name="member[work_address[home_phone]]" type="text" class="form-control" />
+                          </td>  
+                          <td>
+                            <input id="mobile_phone" name="member[work_address[mobile_phone]]" type="text" class="form-control" />
+                          </td>  
+                          <td>
+                            <input id="email" name="member[work_address[email]]" type="text" class="form-control" />
+                          </td>  
+                          <td>
+                            <input id="postal_code" name="member[work_address[postal_code]]" type="text" class="form-control" />
+                          </td>                    
+                        </tr>
+                      </tbody>                  
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group col-3">
+                  <%= f.label :emergency_contact %>
+                </div>
+                <div class="ibox float-e-margins">
+                  <div class="ibox-content">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Full name</th>
+                          <th>Relation</th>
+                          <th>Sub-city</th>
+                          <th>Woreda</th>
+                          <th>House No.</th>
+                          <th>Home Phone</th>
+                          <th>Mobile Phone</th>
+                          <th>Email</th>
+                          <th>Postal Code</th>              
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody id="dispatchItemsTableBody">                      
+                        <tr>
+                          <td>
+                            <input id="full_name" name="member[emergency_contact[full_name]]" type="text" class="form-control" />
+                          </td> 
+                          <td>
+                            <input id="relation" name="member[emergency_contact[relation]]" type="text" class="form-control" />
+                          </td> 
+                          <td>
+                            <input id="sub_city" name="member[emergency_contact[address][sub_city]]" type="text" class="form-control" />
+                          </td>  
+                          <td>
+                            <input id="woreda" name="member[emergency_contact[address][woreda]]" type="text" class="form-control" />
+                          </td>  
+                          <td>
+                            <input id="house_no" name="member[emergency_contact[address][house_no]]" type="text" class="form-control" />
+                          </td> 
+                          <td>
+                            <input id="home_phone" name="member[emergency_contact[address][home_phone]]" type="text" class="form-control" />
+                          </td>                          
+                          <td>
+                            <input id="mobile_phone" name="member[emergency_contact[address][mobile_phone]]" type="text" class="form-control" />
+                          </td>  
+                          <td>
+                            <input id="email" name="member[emergency_contact[address][email]]" type="text" class="form-control" />
+                          </td>  
+                          <td>
+                            <input id="postal_code" name="member[emergency_contact[address][postal_code]]" type="text" class="form-control" />
+                          </td>                    
+                        </tr>
+                      </tbody>                  
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.card-body -->
+            
+            <div class="card-footer">
+              <%= f.submit :class => 'btn btn-primary' %>
+            </div>
+          <% end %>
+        </div>
+        <!-- /.card -->
+      </div>
+    </div>
+  </div>
+</section>

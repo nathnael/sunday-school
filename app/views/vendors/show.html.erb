@@ -1,0 +1,58 @@
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-12">
+        <h1 class="m-0 text-dark">Vendors</h1>
+      </div><!-- /.col -->      
+    </div><!-- /.row -->
+    <div class="row mb-2">
+      <div class="col-sm-10">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item active">Show Vendor</li>
+        </ol>
+      </div><!-- /.col -->
+      <div class="col-sm-2">
+        <div class="title-action float-sm-right">
+          <%= link_to 'Back', vendors_path, :class => "btn btn-default" %>
+        </div>
+      </div><!-- /.col -->
+    </div>
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-primary">
+          <div class="card-body">
+            <div class="form-group col-3">
+              <label>Name:</label>
+              <input type="text" value="<%= @vendor.name %>" class="form-control" placeholder="Enter ..." disabled>
+            </div>
+            <div class="form-group col-3">
+              <label>Code:</label>
+              <input type="text" value="<%= @vendor.code %>" class="form-control" placeholder="Enter ..." disabled>
+            </div>
+            <div class="form-group col-3">
+              <label>Organizational unit:</label>
+              <input type="text" value="<%= @vendor.org_unit %>" class="form-control" placeholder="Enter ..." disabled>
+            </div>
+            <div class="form-group col-3">
+              <label>Status:</label>
+              <input type="text" value="<%= @vendor.status %>" class="form-control" placeholder="Enter ..." disabled>
+            </div>
+            
+            <div class="card-footer">
+              <%= link_to 'Edit', edit_vendor_path(@vendor), :class => 'btn btn-primary' %>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

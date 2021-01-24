@@ -1,0 +1,13 @@
+<!-- HEADER-->
+<header class="header">
+    <nav class="nav nav--tours">
+        <a class="nav__el" href="#">Invoice Registration and Processing System</a>
+    </nav>
+    <div class="header__logo">
+        <img alt="image" class="img-circle" src="<%= image_url('iraps-logo.png') %>">
+    </div>
+    <nav class="nav nav--user">
+        <%= link_to "Log in", new_session_path(resource_name), class: 'nav__el' %><br />
+        <%= link_to "Sign up", new_registration_path(resource_name), class: 'nav__el nav__el--cta' %>
+    </nav>
+</header>

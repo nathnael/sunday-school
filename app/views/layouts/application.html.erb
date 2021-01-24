@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sabbath School</title>
+    <%= csrf_meta_tags %> 
+    <%= csp_meta_tag %>
+    <% if user_signed_in? %> 
+      <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %> 
+    <% else %>
+      <%= stylesheet_link_tag 'login_page', media: 'all', 'data-turbolinks-track': 'reload' %> 
+    <% end %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %> 
+  </head>
+  <body class="sidebar-mini">
+    <div class="wrapper">
+      <% if user_signed_in? %> 
+        <%= render partial: "layouts/header" %> 
+        <%= render partial: "layouts/sidebar" %>
+      <% else %>
+        <%= render partial: "layouts/login_header" %> 
+      <% end %>
+
+      <div class="<%= user_signed_in? ? "content-wrapper" : "main" %>">
+        <%= yield %>
+        <%= toastr_flash %>
+      </div>     
+
+      <% if user_signed_in? %> 
+        <%= render partial: "layouts/footer" %>
+      <% else %>
+        <%= render partial: "layouts/login_footer" %> 
+      <% end %>
+    </div>
+  </body>
+</html>

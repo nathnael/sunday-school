@@ -1,0 +1,111 @@
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-12">
+        <h1>Manage permission for <em><%= @user.name %></em></h1>
+      </div><!-- /.col -->      
+    </div><!-- /.row -->
+    <div class="row mb-2">
+      <div class="col-sm-10">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/users">User</a></li>
+          <li class="breadcrumb-item active">User Permissions</li>
+        </ol>
+      </div><!-- /.col -->
+      <div class="col-sm-2">
+        <div class="title-action float-sm-right">
+          <%= link_to 'Back', users_path, :class => "btn btn-default" %>
+        </div>
+      </div><!-- /.col -->
+    </div>
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="title-action float-sm-right">
+              <%= link_to 'Grant / Revoke Permission',  {:controller => "users", :action => "user_permissions" }, :class => "btn btn-primary" %>
+            </div>           
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table class="table table-bordered table-striped iraps_datatable">
+              <thead>
+                <tr>
+                  <th>Activity</th>
+                  <th>Guest</th>
+                  <th>Clerk</th>
+                  <th>Manager</th>
+                  <th>Admin</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @unique_permissions.each do |permission| %>
+                  <tr>
+                    <td><%= permission %></td>
+                    <td>
+                      <% guest_permission = @all_permissions.where(name: permission, user_type: 0).first %>
+                      <%= check_box_tag "permissions[#{guest_permission.id}]", 1 , @user.permissions.include?(guest_permission), :disabled => true %>
+                    </td>
+                    <td>
+                      <% clerk_permission = @all_permissions.where(name: permission, user_type: 1).first %>
+                      <%= check_box_tag "permissions[#{clerk_permission.id}]", 1 , @user.permissions.include?(clerk_permission), :disabled => true  %>
+                    </td>
+                    <td>
+                      <% manager_permission = @all_permissions.where(name: permission, user_type: 2).first %>
+                      <%= check_box_tag "permissions[#{manager_permission.id}]", 1 , @user.permissions.include?(manager_permission), :disabled => true  %>
+                    </td>
+                    <td>
+                      <% admin_permission = @all_permissions.where(name: permission, user_type: 3).first %>
+                      <%= check_box_tag "permissions[#{admin_permission.id}]", 1 , @user.permissions.include?(admin_permission), :disabled => true  %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Activity</th>
+                  <th>Guest</th>
+                  <th>Clerk</th>
+                  <th>Manager</th>
+                  <th>Admin</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+      </div>
+      <!-- /.card -->
+    </div>
+  </div>
+</section>
+<!-- /.content -->
+
+<script>
+  $(document).ready(function() {
+    if ( ! $.fn.DataTable.isDataTable( '.iraps_datatable' ) ) {
+      $('.iraps_datatable').DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": true,
+        "responsive": true,
+        "dom": 'lBfrtip',
+        "buttons": [
+            'copy', 'csv', 'pdf', 'print'
+        ]
+      });
+    }  
+  });
+</script>
+
+
