@@ -28,6 +28,14 @@
 
               <div class="row">
                 <div class="form-group col-4">
+                  <%= f.label :profile_picture %>                  
+                  <img alt="Profile picture" id="your_preview_id" class="profile-picture" src="<%= image_url('defualt-profile.png') %>">
+                  <%= f.file_field :profile_picture, :class => 'form-control', id: "image_upload_id" %>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group col-4">
                   <%= f.label :name %>
                   <%= f.text_field :name, :class => 'form-control' %>
                 </div>  
@@ -59,11 +67,15 @@
               <div class="row">
                 <div class="form-group col-4">
                   <%= f.label :gender %>
-                  <%= f.text_field :gender, :class => 'form-control' %>
+                  <select name="member[gender]" class="form-control">
+                    <option value="">-- select gender --</option>
+                    <option value="Female">Female</option>
+                    <option value="Male">Male</option>
+                  </select>
                 </div>
                 <div class="form-group col-4">
-                  <%= f.label :dob %>
-                  <%= f.text_field :dob, :class => 'form-control' %>
+                  <%= f.label :dob, 'Date of birth' %>
+                  <%= f.text_field :dob, :class => 'form-control gregorian_datepicker', :required => true %>
                 </div>
                 <div class="form-group col-4">
                   <%= f.label :educational_level %>
@@ -93,16 +105,16 @@
                 </div>
                 <div class="form-group col-4">
                   <label>Departments</label>
-                  <%= select_tag 'member[departments]', options_from_collection_for_select(Department.all, :id, :name, member.departments.pluck(:id)), multiple: true, size: '10%', class: 'form-control multiple_select' %>
+                  <%= f.select :depart, Department.all.collect { |x| [x.name, x.id]}, {:include_blank => false}, :multiple => true, size: '10%', class: 'form-control multiple_select' %>
                 </div>
                 <div class="form-group col-4">
                   <%= f.label :talent %>
                   <%= f.text_area :talent, :class => 'form-control' %>
                 </div>
               </div>
-
+              
               <div class="col-12">
-                <div class="form-group col-3">
+                <div class="form-group col-3" style="font-size:20px;">
                   <%= f.label :home_address %>
                 </div>
                 <div class="ibox float-e-margins">
@@ -123,34 +135,46 @@
                       <tbody id="dispatchItemsTableBody">                      
                         <tr>
                           <td>
-                            <input id="sub_city" name="member[home_address[sub_city]]" type="text" class="form-control" />
+                            <select id="sub_city" name="member[home_addr[sub_city]]" class="form-control">
+                              <option value="">-- select sub-city --</option>
+                              <option value="Addis Ketema">Addis Ketema</option>
+                              <option value="Akaki Kality">Akaki Kality</option>
+                              <option value="Arada">Arada</option>
+                              <option value="Bole">Bole</option>
+                              <option value="Gulele">Gulele</option>
+                              <option value="Kirkos">Kirkos</option>
+                              <option value="Kolfe-Keraniyo">Kolfe-Keraniyo</option>
+                              <option value="Lideta">Lideta</option>
+                              <option value="Nifas Selk">Nifas Selk</option>
+                              <option value="Yeka">Yeka</option>
+                            </select>
+                          </td>
+                          <td>
+                            <input id="woreda" name="member[home_addr[woreda]]" type="text" class="form-control" />
                           </td>  
                           <td>
-                            <input id="woreda" name="member[home_address[woreda]]" type="text" class="form-control" />
+                            <input id="house_no" name="member[home_addr[house_no]]" type="text" class="form-control" />
                           </td>  
                           <td>
-                            <input id="house_no" name="member[home_address[house_no]]" type="text" class="form-control" />
+                            <input id="home_phone" name="member[home_addr[home_phone]]" type="text" class="form-control" />
                           </td>  
                           <td>
-                            <input id="home_phone" name="member[home_address[home_phone]]" type="text" class="form-control" />
+                            <input id="mobile_phone" name="member[home_addr[mobile_phone]]" type="text" class="form-control" />
                           </td>  
                           <td>
-                            <input id="mobile_phone" name="member[home_address[mobile_phone]]" type="text" class="form-control" />
+                            <input id="email" name="member[home_addr[email]]" type="text" class="form-control" />
                           </td>  
                           <td>
-                            <input id="email" name="member[home_address[email]]" type="text" class="form-control" />
-                          </td>  
-                          <td>
-                            <input id="postal_code" name="member[home_address[postal_code]]" type="text" class="form-control" />
+                            <input id="postal_code" name="member[home_addr[postal_code]]" type="text" class="form-control" />
                           </td>                    
                         </tr>
                       </tbody>                  
                     </table>
                   </div>
                 </div>
-              </div>
+              </div>              
               <div class="col-12">
-                <div class="form-group col-3">
+                <div class="form-group col-3" style="font-size:20px;">
                   <%= f.label :work_address %>
                 </div>
                 <div class="ibox float-e-margins">
@@ -171,25 +195,37 @@
                       <tbody id="dispatchItemsTableBody">                      
                         <tr>
                           <td>
-                            <input id="sub_city" name="member[work_address[sub_city]]" type="text" class="form-control" />
+                            <select id="sub_city" name="member[work_addr[sub_city]]" class="form-control">
+                              <option value="">-- select sub-city --</option>
+                              <option value="Addis Ketema">Addis Ketema</option>
+                              <option value="Akaki Kality">Akaki Kality</option>
+                              <option value="Arada">Arada</option>
+                              <option value="Bole">Bole</option>
+                              <option value="Gulele">Gulele</option>
+                              <option value="Kirkos">Kirkos</option>
+                              <option value="Kolfe-Keraniyo">Kolfe-Keraniyo</option>
+                              <option value="Lideta">Lideta</option>
+                              <option value="Nifas Selk">Nifas Selk</option>
+                              <option value="Yeka">Yeka</option>
+                            </select>
                           </td>  
                           <td>
-                            <input id="woreda" name="member[work_address[woreda]]" type="text" class="form-control" />
+                            <input id="woreda" name="member[work_addr[woreda]]" type="text" class="form-control" />
                           </td>  
                           <td>
-                            <input id="house_no" name="member[work_address[house_no]]" type="text" class="form-control" />
+                            <input id="house_no" name="member[work_addr[house_no]]" type="text" class="form-control" />
                           </td>  
                           <td>
-                            <input id="home_phone" name="member[work_address[home_phone]]" type="text" class="form-control" />
+                            <input id="home_phone" name="member[work_addr[home_phone]]" type="text" class="form-control" />
                           </td>  
                           <td>
-                            <input id="mobile_phone" name="member[work_address[mobile_phone]]" type="text" class="form-control" />
+                            <input id="mobile_phone" name="member[work_addr[mobile_phone]]" type="text" class="form-control" />
                           </td>  
                           <td>
-                            <input id="email" name="member[work_address[email]]" type="text" class="form-control" />
+                            <input id="email" name="member[work_addr[email]]" type="text" class="form-control" />
                           </td>  
                           <td>
-                            <input id="postal_code" name="member[work_address[postal_code]]" type="text" class="form-control" />
+                            <input id="postal_code" name="member[work_addr[postal_code]]" type="text" class="form-control" />
                           </td>                    
                         </tr>
                       </tbody>                  
@@ -198,7 +234,7 @@
                 </div>
               </div>
               <div class="col-12">
-                <div class="form-group col-3">
+                <div class="form-group col-3" style="font-size:20px;">
                   <%= f.label :emergency_contact %>
                 </div>
                 <div class="ibox float-e-margins">
@@ -221,31 +257,43 @@
                       <tbody id="dispatchItemsTableBody">                      
                         <tr>
                           <td>
-                            <input id="full_name" name="member[emergency_contact[full_name]]" type="text" class="form-control" />
+                            <input id="full_name" name="member[emergency_cont[full_name]]" type="text" class="form-control" />
                           </td> 
                           <td>
-                            <input id="relation" name="member[emergency_contact[relation]]" type="text" class="form-control" />
+                            <input id="relation" name="member[emergency_cont[relation]]" type="text" class="form-control" />
                           </td> 
                           <td>
-                            <input id="sub_city" name="member[emergency_contact[address][sub_city]]" type="text" class="form-control" />
+                            <select id="sub_city" name="member[emergency_cont[addr[sub_city]]]" class="form-control">
+                              <option value="">-- select sub-city --</option>
+                              <option value="Addis Ketema">Addis Ketema</option>
+                              <option value="Akaki Kality">Akaki Kality</option>
+                              <option value="Arada">Arada</option>
+                              <option value="Bole">Bole</option>
+                              <option value="Gulele">Gulele</option>
+                              <option value="Kirkos">Kirkos</option>
+                              <option value="Kolfe-Keraniyo">Kolfe-Keraniyo</option>
+                              <option value="Lideta">Lideta</option>
+                              <option value="Nifas Selk">Nifas Selk</option>
+                              <option value="Yeka">Yeka</option>
+                            </select>
                           </td>  
                           <td>
-                            <input id="woreda" name="member[emergency_contact[address][woreda]]" type="text" class="form-control" />
+                            <input id="woreda" name="member[emergency_cont[addr[woreda]]]" type="text" class="form-control" />
                           </td>  
                           <td>
-                            <input id="house_no" name="member[emergency_contact[address][house_no]]" type="text" class="form-control" />
+                            <input id="house_no" name="member[emergency_cont[addr[house_no]]]" type="text" class="form-control" />
                           </td> 
                           <td>
-                            <input id="home_phone" name="member[emergency_contact[address][home_phone]]" type="text" class="form-control" />
+                            <input id="home_phone" name="member[emergency_cont[addr[home_phone]]]" type="text" class="form-control" />
                           </td>                          
                           <td>
-                            <input id="mobile_phone" name="member[emergency_contact[address][mobile_phone]]" type="text" class="form-control" />
+                            <input id="mobile_phone" name="member[emergency_cont[addr[mobile_phone]]]" type="text" class="form-control" />
                           </td>  
                           <td>
-                            <input id="email" name="member[emergency_contact[address][email]]" type="text" class="form-control" />
+                            <input id="email" name="member[emergency_cont[addr[email]]]" type="text" class="form-control" />
                           </td>  
                           <td>
-                            <input id="postal_code" name="member[emergency_contact[address][postal_code]]" type="text" class="form-control" />
+                            <input id="postal_code" name="member[emergency_cont[addr[postal_code]]]" type="text" class="form-control" />
                           </td>                    
                         </tr>
                       </tbody>                  
@@ -266,3 +314,56 @@
     </div>
   </div>
 </section>
+
+
+<script>
+  $(document).ready(function() {
+      
+      var activeLi = $('li.active');
+      activeLi.parentsUntil('nav', 'li').addClass('active');
+      activeLi.parentsUntil('nav', 'ul').removeClass('collapse');
+
+      $('.gregorian_datepicker').calendarsPicker({
+          format: 'DD, MM d, yyyy',
+          onSelect: function(dateText, inst) {
+              var dateAsObject = $(this).calendarsPicker('getDate');
+              // var jd = dateAsObject[0].toJD();
+              // var date_gc = $.calendars.fromJD(jd);
+              $(this).val(dateAsObject[0].formatDate('DD, MM d, yyyy'));
+          }
+      });
+
+      $('.ethiopian_datepicker').calendarsPicker({
+          calendar: $.calendars.instance('ethiopian', 'am'),
+          format: 'DD, MM d, yyyy',
+          onSelect: function(dateText, inst) {
+              var dateAsObject = $(this).calendarsPicker('getDate');
+              var jd = dateAsObject[0].toJD();
+              var date_gc = $.calendars.instance('ethiopian').fromJD(jd);
+              $(this).val(date_gc.formatDate('DD, MM d, yyyy'));
+          }
+      });
+
+      $(".amharic_input").amharicKeyboard();
+
+      $('.multiple_select').select2();
+
+      $('#image_upload_id').on('change', function() {
+        showImage(this);
+      });
+  });
+
+  function showImage(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        $('#your_preview_id')
+          .attr('src', e.target.result)
+          .width(150);
+      };
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+</script>

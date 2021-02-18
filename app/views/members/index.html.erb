@@ -31,10 +31,11 @@
             <table class="table table-bordered table-striped iraps_datatable">
               <thead>
                 <tr>
+                  <th></th>
                   <th>Christian name</th>
-                  <th>Name</th>
+                  <th>Full name</th>
                   <th>Gender</th>
-                  <th>Dob</th>                  
+                  <th>Date of birth</th>                  
                   <th>Membership date</th>
                   <th>Status</th>
                   <th>Actions</th>
@@ -44,21 +45,26 @@
                 <% @members.each do |member| %>
                   <tr>
                     <td>
-                      <%= member.christian_name %>
+                      <a href="<%= member_path(member)%>"> 
+                        <img alt="Profile picture" id="your_preview_id" class="profile-picture-small" src='uploads/<%= member.profile_picture_url %>'>
+                      </a>
                     </td>
                     <td>
                       <a href="<%= member_path(member)%>"> 
-                        <%= member.name %>                   
-                      </a>                      
+                        <%= member.christian_name %>                   
+                      </a>
+                    </td>
+                    <td>
+                      <%= member.full_name %>   
                     </td>
                     <td>
                       <%= member.gender %>
                     </td>
                     <td>
-                      <%= member.dob %>
+                      <%= member.dob.to_date.to_formatted_s(:long_ordinal) %>
                     </td>                    
                     <td>
-                      <%= member.membership_date %>
+                      <%= member.membership_date.to_date.to_formatted_s(:long_ordinal) %>
                     </td>
                     <td>
                       <%= member.status %>
@@ -78,10 +84,11 @@
               </tbody>
               <tfoot>
                 <tr>
+                  <th></th>
                   <th>Christian name</th>
-                  <th>Name</th>
+                  <th>Full name</th>
                   <th>Gender</th>
-                  <th>Dob</th>                  
+                  <th>Date of birth</th>                  
                   <th>Membership date</th>
                   <th>Status</th>
                   <th>Actions</th>

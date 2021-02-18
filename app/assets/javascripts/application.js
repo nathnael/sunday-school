@@ -46,5 +46,5 @@ $(document).ready(function() {
 
     $(".amharic_input").amharicKeyboard();
 
-    $('.multiple_select').select2()
+    $('.multiple_select').select2();
 });
