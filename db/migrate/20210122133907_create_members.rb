@@ -24,6 +24,6 @@ class CreateMembers < ActiveRecord::Migration[6.0]
       t.datetime :deleted_at
 
       t.timestamps
-    end
+    end    
   end
 end

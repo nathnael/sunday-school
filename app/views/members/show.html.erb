@@ -1,109 +1,275 @@
-<p id="notice"><%= notice %></p>
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-12">
+        <h1 class="m-0 text-dark">Members</h1>
+      </div><!-- /.col -->      
+    </div><!-- /.row -->
+    <div class="row mb-2">
+      <div class="col-sm-10">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item active">Show Member</li>
+        </ol>
+      </div><!-- /.col -->
+      <div class="col-sm-2">
+        <div class="title-action float-sm-right">
+          <%= link_to 'Edit', edit_member_path(@member), :class => 'btn btn-primary' %>
+          <%= link_to 'Back', members_path, :class => "btn btn-default" %>
+        </div>
+      </div><!-- /.col -->
+    </div>
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-primary">
+          <div class="card-body">
+            <div class="row">
+              <div class="form-group col-4">
+                <label>Profile picture:</label>                 
+                <img alt="Profile picture" id="your_preview_id" class="profile-picture" src="../uploads/<%= @member.profile_picture_url %>">
+              </div>
+            </div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @member.name %>
-</p>
+            <div class="row">
+              <div class="form-group col-4">
+                <label>Name:</label>
+                <input type="text" value="<%= @member.name %>" class="form-control" disabled>
+              </div>  
+              <div class="form-group col-4">
+                <label>Father name:</label>
+                <input type="text" value="<%= @member.father_name %>" class="form-control" disabled>
+              </div>    
+              <div class="form-group col-4">
+                <label>Grand Father name:</label>
+                <input type="text" value="<%= @member.grand_father_name %>" class="form-control" disabled>
+              </div>   
+            </div>
 
-<p>
-  <strong>Name am:</strong>
-  <%= @member.name_am %>
-</p>
+            <div class="row">
+              <div class="form-group col-4">
+                <label>Name (am):</label>
+                <input type="text" value="<%= @member.name_am %>" class="form-control" disabled>
+              </div>
+              <div class="form-group col-4">
+                <label>Father name (am):</label>
+                <input type="text" value="<%= @member.father_name_am %>" class="form-control" disabled>
+              </div>
+              <div class="form-group col-4">
+                <label>Grand father name (am):</label>
+                <input type="text" value="<%= @member.grand_father_name_am %>" class="form-control" disabled>
+              </div>
+            </div>
 
-<p>
-  <strong>Father name:</strong>
-  <%= @member.father_name %>
-</p>
+            <div class="row">
+              <div class="form-group col-4">
+                <label>Gender:</label>
+                <input type="text" value="<%= @member.gender %>" class="form-control" disabled>
+              </div>
+              <div class="form-group col-4">
+                <label>Date of birth:</label>
+                <input type="text" value="<%= @member.dob.to_date.to_formatted_s(:long_ordinal) %>" class="form-control" disabled>
+              </div>
+              <div class="form-group col-4">
+                <label>Educational level:</label>
+                <input type="text" value="<%= @member.educational_level %>" class="form-control" disabled>
+              </div>
+            </div>
 
-<p>
-  <strong>Father name am:</strong>
-  <%= @member.father_name_am %>
-</p>
+            <div class="row">                
+              <div class="form-group col-4">
+                <label>Work:</label>
+                <input type="text" value="<%= @member.work %>" class="form-control" disabled>
+              </div>
+              <div class="form-group col-4">
+                <label>Christian name:</label>
+                <input type="text" value="<%= @member.christian_name %>" class="form-control" disabled>
+              </div>
+              <div class="form-group col-4">
+                <label>Christian Name (am):</label>
+                <input type="text" value="<%= @member.christian_name_am %>" class="form-control" disabled>
+              </div>
+            </div>
 
-<p>
-  <strong>Grand father name:</strong>
-  <%= @member.grand_father_name %>
-</p>
-
-<p>
-  <strong>Grand father name am:</strong>
-  <%= @member.grand_father_name_am %>
-</p>
-
-<p>
-  <strong>Gender:</strong>
-  <%= @member.gender %>
-</p>
-
-<p>
-  <strong>Dob:</strong>
-  <%= @member.dob %>
-</p>
-
-<p>
-  <strong>Educational level:</strong>
-  <%= @member.educational_level %>
-</p>
-
-<p>
-  <strong>Work:</strong>
-  <%= @member.work %>
-</p>
-
-<p>
-  <strong>Christian name:</strong>
-  <%= @member.christian_name %>
-</p>
-
-<p>
-  <strong>Christian name am:</strong>
-  <%= @member.christian_name_am %>
-</p>
-
-<p>
-  <strong>Membership date:</strong>
-  <%= @member.membership_date %>
-</p>
-
-<p>
-  <strong>Talent:</strong>
-  <%= @member.talent %>
-</p>
-
-<p>
-  <strong>Home address:</strong>
-  <%= @member.home_address_id %>
-</p>
-
-<p>
-  <strong>Work address:</strong>
-  <%= @member.work_address_id %>
-</p>
-
-<p>
-  <strong>Emergency contact:</strong>
-  <%= @member.emergency_contact_id %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= @member.status %>
-</p>
-
-<p>
-  <strong>Created by:</strong>
-  <%= @member.created_by %>
-</p>
-
-<p>
-  <strong>Modified by:</strong>
-  <%= @member.modified_by %>
-</p>
-
-<p>
-  <strong>Deleted at:</strong>
-  <%= @member.deleted_at %>
-</p>
-
-<%= link_to 'Edit', edit_member_path(@member) %> |
-<%= link_to 'Back', members_path %>
+            <div class="row">
+              <div class="form-group col-4">
+                <label>Membership date:</label>
+                <input type="text" value="<%= @member.membership_date.to_date.to_formatted_s(:long_ordinal) %>" class="form-control" disabled>
+              </div>
+              <div class="form-group col-4">
+                <label>Departments:</label>
+                <textarea class="form-control" disabled><%= @departments %></textarea>
+              </div>
+              <div class="form-group col-4">
+                <label>Talents:</label>
+                <textarea class="form-control" disabled><%= @member.talent %></textarea>
+              </div>
+            </div>
+            
+            <div class="col-12">
+              <div class="form-group col-3" style="font-size:20px;">
+                <label>Home address</label>
+              </div>
+              <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Sub-city</th>
+                        <th>Woreda</th>
+                        <th>House No.</th>
+                        <th>Home Phone</th>
+                        <th>Mobile Phone</th>
+                        <th>Email</th>
+                        <th>Postal Code</th>              
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="dispatchItemsTableBody">                      
+                      <tr>
+                        <td>
+                          <input type="text" value="<%= @home_address.sub_city %>" class="form-control" disabled>
+                        </td>
+                        <td>
+                          <input type="text" value="<%= @home_address.woreda %>" class="form-control" disabled>
+                        </td>  
+                        <td>
+                          <input type="text" value="<%= @home_address.house_no %>" class="form-control" disabled>
+                        </td>  
+                        <td>
+                          <input type="text" value="<%= @home_address.home_phone %>" class="form-control" disabled>
+                        </td>  
+                        <td>
+                          <input type="text" value="<%= @home_address.mobile_phone %>" class="form-control" disabled>
+                        </td>  
+                        <td>
+                          <input type="text" value="<%= @home_address.email %>" class="form-control" disabled>
+                        </td>  
+                        <td>
+                          <input type="text" value="<%= @home_address.postal_code %>" class="form-control" disabled>
+                        </td>                    
+                      </tr>
+                    </tbody>                  
+                  </table>
+                </div>
+              </div>
+            </div>              
+            <div class="col-12">
+              <div class="form-group col-3" style="font-size:20px;">
+                <label>Work address</label>
+              </div>
+              <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Sub-city</th>
+                        <th>Woreda</th>
+                        <th>House No.</th>
+                        <th>Home Phone</th>
+                        <th>Mobile Phone</th>
+                        <th>Email</th>
+                        <th>Postal Code</th>              
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="dispatchItemsTableBody">                      
+                      <tr>
+                        <td>
+                          <input type="text" value="<%= @work_address.sub_city %>" class="form-control" disabled>
+                        </td>
+                        <td>
+                          <input type="text" value="<%= @work_address.woreda %>" class="form-control" disabled>
+                        </td>  
+                        <td>
+                          <input type="text" value="<%= @work_address.house_no %>" class="form-control" disabled>
+                        </td>  
+                        <td>
+                          <input type="text" value="<%= @work_address.home_phone %>" class="form-control" disabled>
+                        </td>  
+                        <td>
+                          <input type="text" value="<%= @work_address.mobile_phone %>" class="form-control" disabled>
+                        </td>  
+                        <td>
+                          <input type="text" value="<%= @work_address.email %>" class="form-control" disabled>
+                        </td>  
+                        <td>
+                          <input type="text" value="<%= @work_address.postal_code %>" class="form-control" disabled>
+                        </td>                   
+                      </tr>
+                    </tbody>                  
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group col-3" style="font-size:20px;">
+                <label>Emergency contact</label>
+              </div>
+              <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Full name</th>
+                        <th>Relation</th>
+                        <th>Sub-city</th>
+                        <th>Woreda</th>
+                        <th>House No.</th>
+                        <th>Home Phone</th>
+                        <th>Mobile Phone</th>
+                        <th>Email</th>
+                        <th>Postal Code</th>              
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="dispatchItemsTableBody">                      
+                      <tr>
+                        <td>
+                          <input type="text" value="<%= @emergency_contact.full_name %>" class="form-control" disabled>
+                        </td> 
+                        <td>
+                          <input type="text" value="<%= @emergency_contact.relation %>" class="form-control" disabled>
+                        </td> 
+                        <td>
+                          <input type="text" value="<%= @emergency_contact_address.sub_city %>" class="form-control" disabled>
+                        </td>
+                        <td>
+                          <input type="text" value="<%= @emergency_contact_address.woreda %>" class="form-control" disabled>
+                        </td>  
+                        <td>
+                          <input type="text" value="<%= @emergency_contact_address.house_no %>" class="form-control" disabled>
+                        </td>  
+                        <td>
+                          <input type="text" value="<%= @emergency_contact_address.home_phone %>" class="form-control" disabled>
+                        </td>  
+                        <td>
+                          <input type="text" value="<%= @emergency_contact_address.mobile_phone %>" class="form-control" disabled>
+                        </td>  
+                        <td>
+                          <input type="text" value="<%= @emergency_contact_address.email %>" class="form-control" disabled>
+                        </td>  
+                        <td>
+                          <input type="text" value="<%= @emergency_contact_address.postal_code %>" class="form-control" disabled>
+                        </td>                   
+                      </tr>
+                    </tbody>                  
+                  </table>
+                </div>
+              </div>
+            </div>    
+            <div class="card-footer">
+              <%= link_to 'Edit', edit_member_path(@member), :class => 'btn btn-primary' %>
+            </div>  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

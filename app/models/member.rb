@@ -1,6 +1,6 @@
 class Member < ApplicationRecord
     has_one :home_address, :class_name => 'Address', :foreign_key => 'home_address_id'
-    has_many :work_address, :class_name => 'Address', :foreign_key => 'work_address_id'
+    has_one :work_address, :class_name => 'Address', :foreign_key => 'work_address_id'
     has_many :emergency_contact
     has_many :member_departments
     has_many :departments, through: :member_departments

@@ -29,7 +29,7 @@
               <div class="row">
                 <div class="form-group col-4">
                   <%= f.label :profile_picture %>                  
-                  <img alt="Profile picture" id="your_preview_id" class="profile-picture" src="<%= image_url('defualt-profile.png') %>">
+                  <img alt="Profile picture" id="your_preview_id" class="profile-picture" src="<%= @member.profile_picture_url ? '../../uploads/' + @member.profile_picture_url : image_url('defualt-profile.png') %>">
                   <%= f.file_field :profile_picture, :class => 'form-control', id: "image_upload_id" %>
                 </div>
               </div>
@@ -67,11 +67,7 @@
               <div class="row">
                 <div class="form-group col-4">
                   <%= f.label :gender %>
-                  <select name="member[gender]" class="form-control">
-                    <option value="">-- select gender --</option>
-                    <option value="Female">Female</option>
-                    <option value="Male">Male</option>
-                  </select>
+                  <%= select_tag "member[gender]", options_for_select([ "Female", "Male" ], @member.gender), class: 'form-control' %>
                 </div>
                 <div class="form-group col-4">
                   <%= f.label :dob, 'Date of birth' %>
@@ -105,7 +101,7 @@
                 </div>
                 <div class="form-group col-4">
                   <label>Departments</label>
-                  <%= f.select :depart, Department.all.collect { |x| [x.name, x.id]}, {:include_blank => false}, :multiple => true, size: '10%', class: 'form-control multiple_select' %>
+                  <%= f.select :depart, options_for_select(Department.all.collect { |x| [x.name, x.id]}, @departments), {:include_blank => false}, :multiple => true, size: '10%', class: 'form-control multiple_select' %>
                 </div>
                 <div class="form-group col-4">
                   <%= f.label :talent %>
@@ -135,37 +131,25 @@
                       <tbody id="dispatchItemsTableBody">                      
                         <tr>
                           <td>
-                            <select id="sub_city" name="member[home_addr[sub_city]]" class="form-control">
-                              <option value="">-- select sub-city --</option>
-                              <option value="Addis Ketema">Addis Ketema</option>
-                              <option value="Akaki Kality">Akaki Kality</option>
-                              <option value="Arada">Arada</option>
-                              <option value="Bole">Bole</option>
-                              <option value="Gulele">Gulele</option>
-                              <option value="Kirkos">Kirkos</option>
-                              <option value="Kolfe-Keraniyo">Kolfe-Keraniyo</option>
-                              <option value="Lideta">Lideta</option>
-                              <option value="Nifas Selk">Nifas Selk</option>
-                              <option value="Yeka">Yeka</option>
-                            </select>
+                            <%= select_tag "member[home_addr[sub_city]]", options_for_select([ "Addis Ketema", "Akaki Kality", "Arada", "Bole", "Gulele", "Kirkos", "Kolfe-Keraniyo", "Lideta", "Nifas Selk", "Yeka" ], @home_address.sub_city), class: 'form-control' %>
                           </td>
                           <td>
-                            <input id="woreda" name="member[home_addr[woreda]]" type="text" class="form-control" />
+                            <input id="woreda" name="member[home_addr[woreda]]" type="text" class="form-control" value="<%= @home_address.woreda %>" />
                           </td>  
                           <td>
-                            <input id="house_no" name="member[home_addr[house_no]]" type="text" class="form-control" />
+                            <input id="house_no" name="member[home_addr[house_no]]" type="text" class="form-control" value="<%= @home_address.house_no %>" />
                           </td>  
                           <td>
-                            <input id="home_phone" name="member[home_addr[home_phone]]" type="text" class="form-control" />
+                            <input id="home_phone" name="member[home_addr[home_phone]]" type="text" class="form-control" value="<%= @home_address.home_phone %>" />
                           </td>  
                           <td>
-                            <input id="mobile_phone" name="member[home_addr[mobile_phone]]" type="text" class="form-control" />
+                            <input id="mobile_phone" name="member[home_addr[mobile_phone]]" type="text" class="form-control"value="<%= @home_address.mobile_phone %>" />
                           </td>  
                           <td>
-                            <input id="email" name="member[home_addr[email]]" type="text" class="form-control" />
+                            <input id="email" name="member[home_addr[email]]" type="text" class="form-control" value="<%= @home_address.email %>" />
                           </td>  
                           <td>
-                            <input id="postal_code" name="member[home_addr[postal_code]]" type="text" class="form-control" />
+                            <input id="postal_code" name="member[home_addr[postal_code]]" type="text" class="form-control" value="<%=  @home_address.postal_code %>" />
                           </td>                    
                         </tr>
                       </tbody>                  
@@ -195,38 +179,26 @@
                       <tbody id="dispatchItemsTableBody">                      
                         <tr>
                           <td>
-                            <select id="sub_city" name="member[work_addr[sub_city]]" class="form-control">
-                              <option value="">-- select sub-city --</option>
-                              <option value="Addis Ketema">Addis Ketema</option>
-                              <option value="Akaki Kality">Akaki Kality</option>
-                              <option value="Arada">Arada</option>
-                              <option value="Bole">Bole</option>
-                              <option value="Gulele">Gulele</option>
-                              <option value="Kirkos">Kirkos</option>
-                              <option value="Kolfe-Keraniyo">Kolfe-Keraniyo</option>
-                              <option value="Lideta">Lideta</option>
-                              <option value="Nifas Selk">Nifas Selk</option>
-                              <option value="Yeka">Yeka</option>
-                            </select>
+                            <%= select_tag "member[work_addr[sub_city]]", options_for_select([ "Addis Ketema", "Akaki Kality", "Arada", "Bole", "Gulele", "Kirkos", "Kolfe-Keraniyo", "Lideta", "Nifas Selk", "Yeka" ], @work_address.sub_city), class: 'form-control' %>
+                          </td>
+                          <td>
+                            <input id="woreda" name="member[work_addr[woreda]]" type="text" class="form-control" value="<%= @work_address.woreda %>" />
                           </td>  
                           <td>
-                            <input id="woreda" name="member[work_addr[woreda]]" type="text" class="form-control" />
+                            <input id="house_no" name="member[work_addr[house_no]]" type="text" class="form-control" value="<%= @work_address.house_no %>" />
                           </td>  
                           <td>
-                            <input id="house_no" name="member[work_addr[house_no]]" type="text" class="form-control" />
+                            <input id="home_phone" name="member[work_addr[home_phone]]" type="text" class="form-control" value="<%= @work_address.home_phone %>" />
                           </td>  
                           <td>
-                            <input id="home_phone" name="member[work_addr[home_phone]]" type="text" class="form-control" />
+                            <input id="mobile_phone" name="member[work_addr[mobile_phone]]" type="text" class="form-control"value="<%= @work_address.mobile_phone %>" />
                           </td>  
                           <td>
-                            <input id="mobile_phone" name="member[work_addr[mobile_phone]]" type="text" class="form-control" />
+                            <input id="email" name="member[work_addr[email]]" type="text" class="form-control" value="<%= @work_address.email %>" />
                           </td>  
                           <td>
-                            <input id="email" name="member[work_addr[email]]" type="text" class="form-control" />
-                          </td>  
-                          <td>
-                            <input id="postal_code" name="member[work_addr[postal_code]]" type="text" class="form-control" />
-                          </td>                    
+                            <input id="postal_code" name="member[work_addr[postal_code]]" type="text" class="form-control" value="<%=  @work_address.postal_code %>" />
+                          </td>                  
                         </tr>
                       </tbody>                  
                     </table>
@@ -257,43 +229,31 @@
                       <tbody id="dispatchItemsTableBody">                      
                         <tr>
                           <td>
-                            <input id="full_name" name="member[emergency_cont[full_name]]" type="text" class="form-control" />
+                            <input id="full_name" name="member[emergency_cont[full_name]]" type="text" class="form-control" value="<%=  @emergency_contact.full_name %>" />
                           </td> 
                           <td>
-                            <input id="relation" name="member[emergency_cont[relation]]" type="text" class="form-control" />
+                            <input id="relation" name="member[emergency_cont[relation]]" type="text" class="form-control" value="<%=  @emergency_contact.relation %>" />
                           </td> 
                           <td>
-                            <select id="sub_city" name="member[emergency_cont[addr[sub_city]]]" class="form-control">
-                              <option value="">-- select sub-city --</option>
-                              <option value="Addis Ketema">Addis Ketema</option>
-                              <option value="Akaki Kality">Akaki Kality</option>
-                              <option value="Arada">Arada</option>
-                              <option value="Bole">Bole</option>
-                              <option value="Gulele">Gulele</option>
-                              <option value="Kirkos">Kirkos</option>
-                              <option value="Kolfe-Keraniyo">Kolfe-Keraniyo</option>
-                              <option value="Lideta">Lideta</option>
-                              <option value="Nifas Selk">Nifas Selk</option>
-                              <option value="Yeka">Yeka</option>
-                            </select>
+                            <%= select_tag "member[emergency_cont[addr[sub_city]]]", options_for_select([ "Addis Ketema", "Akaki Kality", "Arada", "Bole", "Gulele", "Kirkos", "Kolfe-Keraniyo", "Lideta", "Nifas Selk", "Yeka" ], @emergency_contact_address.sub_city), class: 'form-control' %>
                           </td>  
                           <td>
-                            <input id="woreda" name="member[emergency_cont[addr[woreda]]]" type="text" class="form-control" />
+                            <input id="woreda" name="member[emergency_cont[addr[woreda]]]" type="text" class="form-control" value="<%=  @emergency_contact_address.woreda %>" />
                           </td>  
                           <td>
-                            <input id="house_no" name="member[emergency_cont[addr[house_no]]]" type="text" class="form-control" />
+                            <input id="house_no" name="member[emergency_cont[addr[house_no]]]" type="text" class="form-control" value="<%=  @emergency_contact_address.house_no %>" />
                           </td> 
                           <td>
-                            <input id="home_phone" name="member[emergency_cont[addr[home_phone]]]" type="text" class="form-control" />
+                            <input id="home_phone" name="member[emergency_cont[addr[home_phone]]]" type="text" class="form-control" value="<%=  @emergency_contact_address.home_phone %>" />
                           </td>                          
                           <td>
-                            <input id="mobile_phone" name="member[emergency_cont[addr[mobile_phone]]]" type="text" class="form-control" />
+                            <input id="mobile_phone" name="member[emergency_cont[addr[mobile_phone]]]" type="text" class="form-control" value="<%=  @emergency_contact_address.mobile_phone %>" />
                           </td>  
                           <td>
-                            <input id="email" name="member[emergency_cont[addr[email]]]" type="text" class="form-control" />
+                            <input id="email" name="member[emergency_cont[addr[email]]]" type="text" class="form-control" value="<%=  @emergency_contact_address.email %>" />
                           </td>  
                           <td>
-                            <input id="postal_code" name="member[emergency_cont[addr[postal_code]]]" type="text" class="form-control" />
+                            <input id="postal_code" name="member[emergency_cont[addr[postal_code]]]" type="text" class="form-control" value="<%=  @emergency_contact_address.postal_code %>" />
                           </td>                    
                         </tr>
                       </tbody>                  

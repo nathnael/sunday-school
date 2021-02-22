@@ -10,6 +10,11 @@ class MembersController < ApplicationController
   # GET /members/1
   # GET /members/1.json
   def show
+    @departments = MemberDepartment.where(member_id: @member.id).joins(:department).map { |d| d.department.name }.join(', ')
+    @home_address = Address.find_by_id(@member.home_address_id)
+    @work_address = Address.find_by_id(@member.work_address_id)
+    @emergency_contact = EmergencyContact.find_by_id(@member.emergency_contact_id)
+    @emergency_contact_address = Address.find_by_id(@emergency_contact.address_id)
   end
 
   # GET /members/new
@@ -19,13 +24,17 @@ class MembersController < ApplicationController
 
   # GET /members/1/edit
   def edit
+    @departments = MemberDepartment.where(member_id: @member.id).joins(:department).map { |d| d.department.id }
+    @home_address = Address.find_by_id(@member.home_address_id)
+    @work_address = Address.find_by_id(@member.work_address_id)
+    @emergency_contact = EmergencyContact.find_by_id(@member.emergency_contact_id)
+    @emergency_contact_address = Address.find_by_id(@emergency_contact.address_id)
   end
 
   # POST /members
   # POST /members.json
   def create
     profile_picture = member_params[:profile_picture]
-    puts '########################################### profile_picture: ' + profile_picture.inspect
     departments_hash = member_params[:depart]
     home_address_hash = member_params[:home_addr]
     work_address_hash = member_params[:work_addr]
@@ -56,14 +65,17 @@ class MembersController < ApplicationController
 
     respond_to do |format|
       if @member.save
-        dispatch_items = departments_hash.collect { |d| MemberDepartment.create({member_id: @member.id, department_id: d, created_by: current_user.id })}
-        File.open(Rails.root.join('public', 'uploads', profile_picture.original_filename), 'wb') do |file|
-          file.write(profile_picture.read)
-          @uniq_path = Rails.root.join('public', 'uploads', @member.id.to_s + File.extname(file))
-          File.rename(file, @uniq_path)
-          @member.profile_picture_url = @member.id.to_s + File.extname(file)
-          @member.save
-          puts '########################################### file: ' + file.inspect
+        if departments_hash
+          dispatch_items = departments_hash.collect { |d| MemberDepartment.create({member_id: @member.id, department_id: d, created_by: current_user.id })}
+        end
+        if profile_picture
+          File.open(Rails.root.join('public', 'uploads', profile_picture.original_filename), 'wb') do |file|
+            file.write(profile_picture.read)
+            @uniq_path = Rails.root.join('public', 'uploads', @member.id.to_s + DateTime.now.to_s + File.extname(file))
+            File.rename(file, @uniq_path)
+            @member.profile_picture_url = @member.id.to_s + DateTime.now.to_s + File.extname(file)
+            @member.save
+          end
         end
         format.html { redirect_to @member, notice: 'Member was successfully created.' }
         format.json { render :show, status: :created, location: @member }
@@ -77,8 +89,49 @@ class MembersController < ApplicationController
   # PATCH/PUT /members/1
   # PATCH/PUT /members/1.json
   def update
+    profile_picture = member_params[:profile_picture]
+    departments_hash = member_params[:depart]
+    home_address_hash = member_params[:home_addr]
+    work_address_hash = member_params[:work_addr]
+    emergency_contact_hash = member_params[:emergency_cont]
+    emergency_contact_address_hash = member_params[:emergency_cont][:addr]  
+    
+    if profile_picture
+      File.delete(Rails.root.join('public', 'uploads', @member.profile_picture_url)) if File.exist?(Rails.root.join('public', 'uploads', @member.profile_picture_url))
+      File.open(Rails.root.join('public', 'uploads', profile_picture.original_filename), 'wb') do |file|
+        file.write(profile_picture.read)
+        @uniq_path = Rails.root.join('public', 'uploads', @member.id.to_s + DateTime.now.to_s + File.extname(file))
+        File.rename(file, @uniq_path)
+        @member.profile_picture_url = @member.id.to_s + DateTime.now.to_s + File.extname(file)
+        @member.save
+      end
+    end
+    MemberDepartment.where(member_id: @member.id).collect { |d| d.destroy }
+    if departments_hash      
+      dispatch_items = departments_hash.collect { |d| MemberDepartment.create({member_id: @member.id, department_id: d, created_by: current_user.id })}
+    end
+
+    home_address = Address.find_by_id(@member.home_address_id)
+    home_address.modified_by = current_user.id
+    home_address.update(home_address_hash)
+
+    work_address = Address.find_by_id(@member.work_address_id)
+    work_address.modified_by = current_user.id
+    work_address.update(work_address_hash)
+
+    emergency_contact_map = emergency_contact_hash.except(:addr)
+    emergency_contact = EmergencyContact.find_by_id(@member.emergency_contact_id)
+    emergency_contact.modified_by = current_user.id
+    emergency_contact.update(emergency_contact_map)
+
+    emergency_contact_address = Address.find_by_id(emergency_contact.address_id)
+    emergency_contact_address.modified_by = current_user.id
+    emergency_contact_address.update(emergency_contact_address_hash)
+
+    member_map = member_params.except(:depart, :home_addr, :work_addr, :emergency_cont, :profile_picture)
+
     respond_to do |format|
-      if @member.update(member_params)
+      if @member.update(member_map)        
         format.html { redirect_to @member, notice: 'Member was successfully updated.' }
         format.json { render :show, status: :ok, location: @member }
       else
