@@ -1,5 +1,5 @@
 class MembersController < ApplicationController
-  before_action :set_member, only: [:show, :edit, :update, :destroy]
+  before_action :set_member, only: [:show, :edit, :update, :destroy, :print_member_form]
 
   # GET /members
   # GET /members.json
@@ -20,6 +20,11 @@ class MembersController < ApplicationController
   # GET /members/new
   def new
     @member = Member.new
+    # @home_address = []
+    # @work_address = []
+    # @departments = []
+    # @emergency_contact = []
+    # @emergency_contact_address = []
   end
 
   # GET /members/1/edit
@@ -96,7 +101,7 @@ class MembersController < ApplicationController
     emergency_contact_hash = member_params[:emergency_cont]
     emergency_contact_address_hash = member_params[:emergency_cont][:addr]  
     
-    if profile_picture
+    if profile_picture.present?
       File.delete(Rails.root.join('public', 'uploads', @member.profile_picture_url)) if File.exist?(Rails.root.join('public', 'uploads', @member.profile_picture_url))
       File.open(Rails.root.join('public', 'uploads', profile_picture.original_filename), 'wb') do |file|
         file.write(profile_picture.read)
@@ -107,7 +112,7 @@ class MembersController < ApplicationController
       end
     end
     MemberDepartment.where(member_id: @member.id).collect { |d| d.destroy }
-    if departments_hash      
+    if departments_hash.present?      
       dispatch_items = departments_hash.collect { |d| MemberDepartment.create({member_id: @member.id, department_id: d, created_by: current_user.id })}
     end
 
@@ -137,6 +142,15 @@ class MembersController < ApplicationController
       else
         format.html { render :edit }
         format.json { render json: @member.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def print_member_form
+    puts "##################### Member: " + @member.inspect
+    respond_to do |format|
+      format.docx do
+        render docx: 'print_member_form', filename: 'my_file.docx'
       end
     end
   end

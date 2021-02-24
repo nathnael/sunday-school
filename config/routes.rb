@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   put 'users/:id/updatePermissions', to: 'users#updatePermissions'
   get 'users/:id/user_permissions', to: 'users#user_permissions'
+  get 'members/print_member_form/:id', to: 'members#print_member_form', format: 'docx'
 
-  root to: 'dashboard#index'
+  root to: 'members#index'
 end

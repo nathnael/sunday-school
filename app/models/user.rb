@@ -4,7 +4,8 @@ class User < ApplicationRecord
    has_many :permissions, through: :user_permissions
   
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable
+         :recoverable, :rememberable, :trackable, :validatable
+        #  , :confirmable
  
    enum user_types: {
      guest:0,    
