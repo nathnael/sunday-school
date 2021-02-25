@@ -14,12 +14,8 @@ class User < ApplicationRecord
      admin:3
    }
   
-  def name
-    name.to_s + ' ' + father_name.to_s + grand_father_name.to_s
-  end
-
-  def name_am
-    name_am.to_s + ' ' + father_name_am.to_s + grand_father_name_am.to_s
+  def full_name
+    first_name.to_s + ' ' + last_name.to_s
   end
 
   def permission(permission, user_type)   
