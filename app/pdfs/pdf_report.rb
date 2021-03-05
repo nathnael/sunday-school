@@ -24,7 +24,7 @@ class PdfReport < Prawn::Document
                 text "ተስፋ እየሩሳሌም ሰንበት ት/ቤት", align: :center
             end
             grid([1, 3], [1, 3]).bounding_box do
-                image "#{Rails.root}/public/assets/sabbath.png", height: 45, align: :center
+                image "#{Rails.root}/app/assets/images/sabbath.png", height: 45, align: :center
             end
             grid([1, 4], [1, 6]).bounding_box do
                 text "ETHIOPIAN ORTHODOX TEWAHDO CHURCH", align: :center
