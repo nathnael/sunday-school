@@ -1,5 +1,6 @@
 class MembersController < ApplicationController
   before_action :set_member, only: [:show, :edit, :update, :destroy, :print_member_form]
+  include DateHelper, SubcityTranslated
 
   # GET /members
   # GET /members.json
@@ -147,10 +148,24 @@ class MembersController < ApplicationController
   end
 
   def print_member_form
-    puts "##################### Member: " + @member.inspect
+    @member.dob = toEthiopian(@member.dob)
+    @member.membership_date = toEthiopian(@member.membership_date)
+    
+    @departments = MemberDepartment.where(member_id: @member.id).joins(:department).map { |d| d.department.id }
+    @home_address = Address.find_by_id(@member.home_address_id)    
+    @home_address.sub_city = subcityToAmharic(@home_address.sub_city)
+    @work_address = Address.find_by_id(@member.work_address_id)
+    @work_address.sub_city = subcityToAmharic(@work_address.sub_city)
+    @emergency_contact = EmergencyContact.find_by_id(@member.emergency_contact_id)
+    @emergency_contact_address = Address.find_by_id(@emergency_contact.address_id)
+    @emergency_contact_address.sub_city = subcityToAmharic(@emergency_contact_address.sub_city)
     respond_to do |format|
-      format.docx do
-        render docx: 'print_member_form', filename: 'my_file.docx'
+      format.html
+      format.pdf do
+          pdf = PrintMemberFormPdf.new(@member, @home_address, @work_address, @emergency_contact, @emergency_contact_address)          
+          send_data pdf.render, filename: "#{@member.id}_#{@member.full_name}_member_form.pdf",
+          type: "application/pdf",
+          disposition: "inline"
       end
     end
   end

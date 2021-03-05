@@ -16,7 +16,7 @@
       <div class="col-sm-2">
         <div class="title-action float-sm-right">
           <%= link_to 'Edit', edit_member_path(@member), :class => 'btn btn-primary' %>
-          <!--<%= link_to 'Print', '/members/print_member_form/' + @member.id.to_s, :class => 'btn btn-default' %>-->
+          <%= link_to 'Print', '/members/' + @member.id.to_s + '/print_member_form.pdf', :class => 'btn btn-default' %>
           <%= link_to 'Back', members_path, :class => "btn btn-default" %>
         </div>
       </div><!-- /.col -->

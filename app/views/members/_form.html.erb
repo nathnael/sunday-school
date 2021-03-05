@@ -232,7 +232,7 @@
                             <input id="full_name" name="member[emergency_cont[full_name]]" type="text" class="form-control" value="<%=  @emergency_contact.present? ? @emergency_contact.full_name : "" %>" />
                           </td> 
                           <td>
-                            <input id="relation" name="member[emergency_cont[relation]]" type="text" class="form-control" value="<%=  @emergency_contact.present? ? @emergency_contact.relation : "" %>" />
+                            <%= select_tag "member[emergency_cont[relation]]", options_for_select([ "Mother", "Father", "Sister", "Brother", "Caretaker" ], @emergency_contact.present? ? @emergency_contact.relation : ""), class: 'form-control' %>
                           </td> 
                           <td>
                             <%= select_tag "member[emergency_cont[addr[sub_city]]]", options_for_select([ "Addis Ketema", "Akaki Kality", "Arada", "Bole", "Gulele", "Kirkos", "Kolfe-Keraniyo", "Lideta", "Nifas Selk", "Yeka" ], @emergency_contact_address.present? ? @emergency_contact_address.sub_city : ""), class: 'form-control' %>
