@@ -35,8 +35,10 @@ class PrintMemberFormPdf < PdfReport
             move_down 8
             text "________________", :size => 8, :align => :left
         end        
-        grid([3, 5], [5, 6]).bounding_box do
-            image "#{Rails.root}/public/uploads/#{@member.profile_picture_url}", height: 120, position: 15, vposition: 0
+        if @member.profile_picture_url.present?
+            grid([3, 5], [5, 6]).bounding_box do
+                image "#{Rails.root}/public/uploads/#{@member.profile_picture_url}", height: 120, position: 15, vposition: 0
+            end
         end
         grid([4, 3], [4, 3]).bounding_box do
             text "የአባልነት ቅጽ", :size => 14, :align => :left, valign: :bottom

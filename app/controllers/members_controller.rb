@@ -177,6 +177,11 @@ class MembersController < ApplicationController
       File.delete(Rails.root.join('public', 'uploads', @member.profile_picture_url)) if File.exist?(Rails.root.join('public', 'uploads', @member.profile_picture_url))
     end
     MemberDepartment.where(member_id: @member.id).collect { |d| d.destroy }
+    emergency_contact = EmergencyContact.find_by_id(@member.emergency_contact_id)
+    Address.destroy(@member.home_address_id)
+    Address.destroy(@member.work_address_id)
+    Address.destroy(emergency_contact.address_id)
+    EmergencyContact.destroy(@member.emergency_contact_id)
     @member.destroy
     respond_to do |format|
       format.html { redirect_to members_url, notice: 'Member was successfully destroyed.' }
