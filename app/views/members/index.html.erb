@@ -61,10 +61,10 @@
                       <%= member.gender %>
                     </td>
                     <td>
-                      <%= member.dob.to_date.to_formatted_s(:long_ordinal) %>
+                      <%= member.dob.present? ? member.dob.to_date.to_formatted_s(:long_ordinal) : "" %>
                     </td>                    
                     <td>
-                      <%= member.membership_date.to_date.to_formatted_s(:long_ordinal) %>
+                      <%= member.membership_date.present? ? member.membership_date.to_date.to_formatted_s(:long_ordinal) : "" %>
                     </td>
                     <td>
                       <%= member.status %>
