@@ -46,9 +46,7 @@
                   <tr>
                     <td>
                       <a href="<%= member_path(member)%>"> 
-                        <% if member.profile_picture_url.present? %>
-                          <img alt="Profile picture" id="your_preview_id" class="profile-picture-small" src='uploads/<%= member.profile_picture_url %>'>
-                        <% end %>
+                        <img alt="Profile picture" id="your_preview_id" class="profile-picture-small" src="<%= member.profile_picture_url ? 'uploads/' + member.profile_picture_url : image_url('defualt-profile.png') %>">
                       </a>
                     </td>
                     <td>
